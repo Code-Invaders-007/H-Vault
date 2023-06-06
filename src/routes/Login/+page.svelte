@@ -1,6 +1,7 @@
 <script>
 	import { A, DarkMode } from 'flowbite-svelte';
 	import { Button, Input, Label, Helper, CloseButton, Avatar } from 'flowbite-svelte';
+	import {getAccount} from "/src/connect.js"
 	let show = false;
 	let show1 = false;
 </script>
@@ -74,7 +75,7 @@
 	</div>
 
 	<!-- Submit Button -->
-	<Button class="mt-4" color="primary" size="lg" block><a href="/Menu">Login</a></Button>
+	<Button class="mt-4" color="primary" size="lg" block on:click={()=>getAccount()}><a href="/Menu">Login</a></Button>
 </div>
 
 <style>

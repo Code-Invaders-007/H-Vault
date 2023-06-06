@@ -24,7 +24,13 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@coral-xyz/borsh": "^0.27.0",
 		"@popperjs/core": "^2.11.7",
+		"@project-serum/anchor": "^0.26.0",
+		"@solana/wallet-adapter-phantom": "^0.9.22",
+		"@solana/wallet-adapter-react": "^0.15.32",
+		"@solana/web3.js": "^1.75.0",
+		"buffer": "^6.0.3",
 		"classnames": "^2.3.2",
 		"flowbite": "^1.6.5",
 		"flowbite-svelte": "^0.34.9",

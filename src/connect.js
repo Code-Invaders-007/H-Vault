@@ -64,7 +64,7 @@ export const getAccount = async function () {
 
 
 
-       export const createPatient = async function () {
+       export const createPatient = async function (pdata) {
         const walletAdapter = new PhantomWalletAdapter();
         await walletAdapter.connect()
         window.Buffer = buffer.Buffer;
@@ -85,10 +85,10 @@ export const getAccount = async function () {
             
         //functio to create patient account
         //generate user pubkey
-        const [userPda] = anchor.web3.PublicKey.findProgramAddressSync([Buffer.from("new-patient"), publicKeyBuffer,Uint8Array.from([7])], program.programId)
+        const [userPda] = anchor.web3.PublicKey.findProgramAddressSync([Buffer.from("new-patient"), publicKeyBuffer,Uint8Array.from([pdata.pid])], program.programId)
        
         const patientcreated = await program.methods
-            .initialize( 7,"patientname1","27/06/2002","A+ve","female","tumkur")    //arguments to be passed for patient account
+            .initialize( pdata.pid,pdata.name,pdata.dob,pdata.bloodgroup,pdata.gender,pdata.origin)    //arguments to be passed for patient account
             .accounts({
                 patientAccount: userPda,
                 authority: walletAdapter.publicKey,
@@ -102,7 +102,7 @@ export const getAccount = async function () {
 
 
 
-       export const AddFile = async function () {
+       export const AddFile = async function (pdata) {
         const walletAdapter = new PhantomWalletAdapter();
         await walletAdapter.connect()
         window.Buffer = buffer.Buffer;
@@ -123,10 +123,13 @@ export const getAccount = async function () {
             
         //functio to create patient account
         //generate user pubkey
-        const [userPda] = anchor.web3.PublicKey.findProgramAddressSync([Buffer.from("new-patient"), publicKeyBuffer,Uint8Array.from([6])], program.programId)
-        const [filePda] = anchor.web3.PublicKey.findProgramAddressSync([Buffer.from("patient-file"),userPda.toBuffer(),Uint8Array.from([0]) ], program.programId)
+        
+        const [userPda] = anchor.web3.PublicKey.findProgramAddressSync([Buffer.from("new-patient"), publicKeyBuffer,Uint8Array.from([pdata.pid])], program.programId)
+        const useraccount= await program.account.patientAccount.fetch(userPda)
+        console.log(useraccount.fileCount)
+        const [filePda] = anchor.web3.PublicKey.findProgramAddressSync([Buffer.from("patient-file"),userPda.toBuffer(),Uint8Array.from([useraccount.fileCount]) ], program.programId)
         const filecreated= await program.methods
-              .addFile(4,"cid1")  //arguementsto smartcontract method for adding file
+              .addFile(pdata.pid,pdata.cid)  //arguementsto smartcontract method for adding file
               .accounts({
                 patientAccount: userPda,
                 fileAccount: filePda,

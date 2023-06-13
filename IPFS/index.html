@@ -9,8 +9,41 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 </head>
 <body>
+  <button onclick="ins()">water
+  </button>
+  
+  <script >
+    async function ins(){
+        const query = {
+            path: '/home/hdoop/Desktop/Mini project/localminiproject/H-Vault/fsd.json',
+            firstName: 'Abhishek',
+            lastName: 'S',
+            dob: 0,
+            bg: 'o+',
+            phone: 999,
+            email: '@jga',
+            gender: 'male',
+            ms: 'no'
+            };
+            const customConfig = {
+                headers: {
+                'Content-Type': 'application/json'
+                }
+            };
+        
+            // Send the POST request using Axios
+            const res = await axios.post('http://127.0.0.1:3000/insert', query, customConfig);
+            
+            console.log(res)
+    }
+
+    
+  </script>
 
 <div class="container">
   <center>

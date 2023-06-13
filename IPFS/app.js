@@ -1,9 +1,22 @@
 import { create, globSource } from 'ipfs-http-client';
 import fetch from 'node-fetch';
 import {insert , update} from './db.js'
+import mongoose from 'mongoose';
 import fs from "fs"
- const client = create();
- console.log(client.getEndpointConfig());
+import express from 'express'
+const uri = "mongodb://localhost:27017/";
+const dbName = "patient";
+var app = express()
+
+const client = create();
+console.log(client.getEndpointConfig());
+
+mongoose.connect(uri+dbName, 
+  {
+    useNewUrlParser: true, 
+    useUnifiedTopology: true
+  });
+
 
 const Path="/home/hdoop/Desktop/Mini project/v2/H-Vault/IPFS/sample.txt";
 
@@ -21,29 +34,10 @@ export async function insertIPFS(path,firstName,lastName,DOB,bloodGroup,phoneNum
       console.log(String(file.cid));
       const hash = 'randomhashfhowelnfsohewoowhlkf';
       const d = 3232;
-      const patient = insert(d,firstName,lastName,DOB,bloodGroup,phoneNumber,email,gender,martialStatus,String(file.cid),"fsdfsd");
+      // const patient = insert(d,firstName,lastName,DOB,bloodGroup,phoneNumber,email,gender,martialStatus,String(file.cid),"fsdfsd");
+      const patient = insert(d,'abhi','s','0000','o+','0000' ,'jdjd','male','martialStatus',String(file.cid),"fsdfsd");
+     
     }
-
-    const firstName = "marutho"
-    const lastName = "uzumaki"
-    const DOB = "000"
-    const bloodGroup = "0+"
-    const phoneNumber = "999"
-    const email="@family"
-    const gender = "female"
-    const martialStatus="dontknow"
-
-
-    insertIPFS(Path,firstName,lastName,DOB,bloodGroup,phoneNumber,email,gender,martialStatus)
-
-
-
-
-
-
-
-
-
 
 
 

@@ -93,19 +93,29 @@ patient.save()
 return patient
 }
 
-export function update(patient,cidd,hash){
+
+export async function updateOne(id,cid,hash){
+  console.log('fsdf')
   const newData = {
-    [cidd]: {
-    cid:cidd,
-    hash:hash
-    }
-    
+    [cid]:{
+    cid:cid,
+    hash:hash    }
   }
-  const field = 'cidhash.file'
-  patient.cidhash.file= {...patient.get(field), ...newData};
-  Patient.updateOne({ _id: patient._id }, { $set: { cidhash: patient.cidhash } })
+  const collection = db.collection('pids')
+  const query = { _id: id };
+  const document = await collection.findOne(query);
   
+  console.log('updated')
+  
+    if (document) {
+      const file = {...document.cidhash, ...newData}
+  console.log(file)
+  await collection.updateOne({_id: id},{$set: {
+  "cidhash":file
+  }})
+   }
 }
+// updateOne('3232','chdsdaasde','fadsaaaaaaaaaaaf')
 // const patient = insert("342","chetan","managavi","0000","O+","9999","@fans","dontknow","polygamy","fdsf","fsdfs")
 // const patient = insert(,n = "maruto",l = "managavi",dob = "0000",bg="O+",pn = "9999",em ="@fans",g = "dontknow",ms = "polygamy",ci = "dfs", ha = "good one");
 // const patient = insert(3000,"marutho","uzumaki","000","0+","9999","@family","female","no","afdsfs","fsdfsf");
